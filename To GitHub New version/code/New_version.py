@@ -67,8 +67,7 @@ if __name__ == '__main__':
                   '17:00:00', '20:00:00', '21:00:00']
     halls = list(range(1, halls+1))
 
-    base_day = theme_move[0].Displayday
-    last_day = theme_move[0].Endday
+    base_day, last_day = theme_move[0].Displayday, theme_move[0].Endday
 
     for x in theme_move:
         if x.Displayday < base_day:
@@ -79,20 +78,17 @@ if __name__ == '__main__':
 
     counter_day = timedelta(1)
 
-    diff_day = last_day - base_day
-    counter_date = base_day
+    diff_day, counter_date, counter_no = last_day - base_day, base_day, 1
 
-    counter_no = 1
     with open(file_name + '.csv', mode='w') as tmp_file:
         tmp_file = csv.DictWriter(tmp_file, Theme.row_name)
         tmp_file.writeheader()
 
         i = diff_day.days + 1
 
-        # for i in range(1, diff_day.days+1):
         while i > 0:
-            can_choice = [x for x in theme_move if (counter_date - x.Displayday).days >= 0
-                          and (counter_date - x.Endday).days <= 0]
+            can_choice = [x for x in theme_move if (
+                counter_date - x.Displayday).days >= 0 >= (counter_date - x.Endday).days]
             for hall in halls:
                 for time_part in time_range:
 
@@ -109,7 +105,6 @@ if __name__ == '__main__':
                                 [counter_no, time_part, 'N/A', hall, 'N/A', counter_date.strftime("%Y-%m-%d")]))
 
                     tmp_file.writerow(put_csv_dict)
-                    #print(rand_thing.out(counter_no , counter_date , timedelta(hours=t[0] , minutes=t[1] , seconds=t[2]) , hall))
                     counter_no += 1
             i -= 1
             counter_date += counter_day
