@@ -22,9 +22,9 @@ class Theme:
         self.name = input_dict['Name']
 
         self.Displayday = datetime.strptime(
-            input_dict['DisplayTime'], "%Y-%m-%d")
+            input_dict['DisplayTime'], "%Y/%m/%d")
 
-        self.Endday = datetime.strptime(input_dict['EndTime'], "%Y-%m-%d")
+        self.Endday = datetime.strptime(input_dict['EndTime'], "%Y/%m/%d")
 
         Time_list = list(map(int, input_dict['HowLong'].split(':')))
         self.theme_length = timedelta(
@@ -33,7 +33,7 @@ class Theme:
     def out(self, No: int, Date: datetime, Start_time, Hall: int) -> dict:
         EndTime = str(Start_time + self.theme_length)
 
-        Date = Date.strftime("%Y-%m-%d")
+        Date = Date.strftime("%Y/%m/%d")
 
         input_list = [No, str(Start_time), EndTime, Hall, self.name, Date]
         return dict(zip(Theme.row_name, input_list))
